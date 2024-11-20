@@ -9,11 +9,12 @@ en = hunspell.HunSpell('en_US.dic', 'en_US.aff')
 
 class SpellingChecker:
     def __init__(self):
+        # Хэрэглэгчийн ажиллах цонх үүсгэх хэсэг
         self.root = tk.Tk()
 
         width = self.root.winfo_screenwidth()
         height = self.root.winfo_screenheight()
-        self.root.geometry(f"{width}x{height}")
+        self.root.geometry(f"{width}x{height}") # Дэлгэцний хэмжээний дагууд цонхны хэмжээг тохируулна
         self.root.title("Алдаа шалгагч")
 
         self.text = ScrolledText(self.root, font=("Arial", 14), wrap=tk.WORD)
@@ -34,7 +35,7 @@ class SpellingChecker:
 
     def check_spelling(self, event=None):
         content = self.text.get("1.0", tk.END).strip()
-        words = re.findall(r'\b\w+\b', content)
+        words = re.findall(r'\b\w+\b', content) #Цонхонд бичигдсэн бичвэрээс үг бүрийг салгаж авч words массивт оруулж байна
         total_words = len(words)
         misspelled_count = 0
 
@@ -50,7 +51,7 @@ class SpellingChecker:
 
         self.stats_label.config(text=f"Үгийн тоо: {total_words} | Алдсан үгийн тоо: {misspelled_count}")
 
-    def show_suggestions(self, event):
+    def show_suggestions(self, event): # Буруу бичигдсэн үгэнд санал өөр үг санал болгох функц
         mouse_index = self.text.index(f"@{event.x},{event.y}")
 
         for tag in self.text.tag_names(mouse_index):
